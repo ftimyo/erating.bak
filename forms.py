@@ -3,6 +3,8 @@ from django import forms
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label="Username",max_length=30, 
-	       widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
+	       widget=forms.TextInput(attrs={'class': 'form-control', 'name':
+                   'username','placeholder':'Username'}))
     password = forms.CharField(label="Password", max_length=30, 
-	       widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'password'}))
+            widget=forms.TextInput(attrs={'class': 'form-control',
+                'type':'password','name': 'password','placeholder':'Password'}))

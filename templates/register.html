@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{%load staticfiles %}
+{% block content %}
+<div  id="login-modal"  role="dialog" aria-labelledby="myModalLabel">
+    	<div class="modal-dialog">
+			<div class="modal-content">
+                <div id="div-forms">
+                    
+                    <form id="register-form"
+													style="background:url({% static 'img/app_background_ver4.png' %}); height:408px; width:280px">
+            		    <div style="width: 80%; margin: 0 auto; padding: 65px 0px 30px 0px">
+						<div class="modal-body">
+		    				<input id="register_username" class="form-control" type="text" placeholder="Username" required>
+                            <input id="register_fname" class="form-control" type="text" placeholder="First Name" required>
+                            <input id="register_lname" class="form-control" type="text" placeholder="Last Name" required>
+                            <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
+                            <input id="register_password" class="form-control" type="password" placeholder="Password" required>
+                            <input id="cregister_password" class="form-control"	type="password" placeholder="Confirm Password" required>
+            			</div>
+		    		    <div class="modal-footer">
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+                            </div>
+		    		    </div>
+						</div>
+                    </form>
+
+                </div>
+
+			</div>
+		</div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/greenmoney.js' %}" type="text/javascript"></script>
+{% endblock %}

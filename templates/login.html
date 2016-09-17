@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {%load staticfiles %}
-<style>
-</style>
 {% block content %}
 <div id="login-modal"  role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog">
@@ -9,23 +7,10 @@
 <div id="div-forms">
                     <form method="post" action="{% url 'login' %}" id="login-form" style="height:408px; width:280px; align: left;background: url({%static 'img/app_background_ver4.png' %});">
                     {% csrf_token %}
-                    <div style="width: 80%; margin: 0 auto; padding: 100px 0px">
-										<div class="modal-body">
-							<p style="font-size:26px; text-align:center">Log In</p>
-
-                                <p class="bs-component">
-                                <table>
-                                    <tr>
-                                        <td>{{ form.username.label_tag }}</td>
-                                        <td>{{ form.username }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>{{ form.password.label_tag }}</td>
-                                        <td>{{ form.password }}</td>
-                                    </tr>
-                                </table>
-                                </p>
-
+                    <div style="width: 80%; margin: 0 auto; padding: 150px 0px 20px 0px">
+                            <div class="modal-body">
+															{{ form.username }}
+															{{ form.password }}
                             </div>
                             
                             <div class="modal-footer" >

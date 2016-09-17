@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%load staticfiles %}
+<style>
+</style>
+{% block content %}
+<div id="login-modal"  role="dialog" aria-labelledby="myModalLabel">
+<div class="modal-dialog">
+<div class="modal-content">
+<div id="div-forms">
+                    <form method="post" action="{% url 'login' %}" id="login-form" style="height:408px; width:280px; align: left;background: url({%static 'img/app_background_ver4.png' %});">
+                    {% csrf_token %}
+                    <div style="width: 60%; margin: 0 auto; padding: 100px 0px">
+                            <div class="modal-body">
+							<p style="font-size:26px; text-align:center">Log In</p>
+
+                                <p class="bs-component">
+                                <table>
+                                    <tr>
+                                        <td>{{ form.username.label_tag }}</td>
+                                        <td>{{ form.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ form.password.label_tag }}</td>
+                                        <td>{{ form.password }}</td>
+                                    </tr>
+                                </table>
+                                </p>
+
+                            </div>
+                            
+                            <div class="modal-footer" >
+                            <div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                            </div>
+                            </div>
+                    </div>
+                    </form>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'js/greenmoney.js' %}" type="text/javascript"></script>
+{% endblock %}

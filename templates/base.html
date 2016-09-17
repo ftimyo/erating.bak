@@ -1,0 +1,26 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Green Money</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+		<link href="{% static 'css/greenmoney.css' %}" rel="stylesheet" type="text/css" />
+	<link rel="icon" type="image/png" href="image/favicon.ico">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<style>
+		body{
+			background: url("{%static 'img/Beautiful_Green_Forest_Background.jpg' %}");
+			background-repeat: repeat;
+		}
+	</style>
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+    {% block javascript %}
+    {% endblock %}
+</body>
+</html>

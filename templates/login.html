@@ -2,18 +2,6 @@
 {%load staticfiles %}
 
 {% block content %}
-    {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
 
 <div id="login-modal"  role="dialog" aria-labelledby="myModalLabel">
 <div class="modal-dialog">
@@ -24,6 +12,11 @@
 			align: left;background: url({%static 'img/app_background_ver4.png' %});">
 		{% csrf_token %}
 		<div style="width: 80%; margin: 0 auto; padding: 150px 0px 20px 0px">
+		{% if form.errors %}
+		<p align="center" style="color:red;">Your username and password didn't match. Please try again.</p>
+		{% else %}
+		<p align="center" style="color:red;visibility: hidden;">Your username and password didn't match. Please try again.</p>
+		{% endif %}
 						<div class="modal-body">
 							{{ form.username }}
 							{{ form.password }}

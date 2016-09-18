@@ -25,6 +25,11 @@
             			</div>
 		    		    <div class="modal-footer">
                             <div>
+																{%if emsg %}
+																<p align="center" style="color:red;">{{emsg}}</p>
+																{% else %}
+																<p align="center" style="color:red;visibility:hidden">error</p>
+																{% endif %}
                                 <input type="submit" value='Register' class="btn btn-primary btn-lg btn-block">
                             </div>
 		    		    </div>

@@ -8,6 +8,7 @@ import requests as prequests
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 import json as pjson
+from .models import GreenMerchants
 
 
 # Create your views here.
@@ -21,8 +22,29 @@ def logout_view(request):
 def home(request):
     user = request.user
     bank = Bank.objects.filter(uid=user)[0]
-    print(bank.cid)
-    return render(request,"home.html")
+    context = {'cid':bank.cid}
+    bankurl = 'http://api.reimaginebanking.com/customers/{}/accounts?key={}'.format(bank.cid,apiKey)
+    response = prequests.get(bankurl)
+    response = response.json()
+    if len(response) == 0:
+        return render(request,"home.html",context)
+    response = response[0]
+    aid = response.get('_id','')
+    context.update({'aid':aid})
+    bankurl ='http://api.reimaginebanking.com/accounts/{}/purchases?key={}'.format(aid,apiKey)
+    response = prequests.get(bankurl).json()
+    total = float(0)
+    for purchase in response:
+        m = GreenMerchants.objects.filter(mid = purchase.get('merchant_id',''))
+        if len(m) > 0:
+            m = m[0]
+            price = float(purchase.get('amount',''))
+            scale = float(m.mreward)
+            total += price * scale
+    if total > 0:
+        total = "%.2f"%total
+        context.update({'reward':total})
+    return render(request,"home.html",context)
 
 def signup(request):
     emsg = ""
@@ -70,12 +92,10 @@ def signup(request):
             headers={'content-type':'application/json'},)
     if response.status_code == 201:
        result = response.json().get('objectCreated','')
-       print(result)
        user.save()
        bank = Bank.objects.create(uid=user,cid=str(result.get('_id','')))
-       print(bank.cid)
        bank.save()
        login(request,user)
-       return render(request,"home.html")
+       return redirect(reverse('home'))
     emsg = "System busy, try again later!"
     return render(request,"register.html",{'emsg':emsg})

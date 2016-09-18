@@ -7,7 +7,13 @@
 document.getElementById("logout").style.visibility = "visible";
 </script>
 <div class="jumbotron">
-  <h1>Hello</h1>
+	<h1>Customer ID: {{cid}}</h1>
+	{% if aid %}
+	<h1>Account ID: {{aid}}</h1>
+	{% endif %}
+	{% if reward %}
+	<h1>Green Reward: ${{reward}}</h1>
+	{% endif %}
   <p>You are on your Dashboard</p>
 </div>
 </div>

@@ -11,7 +11,7 @@
 			id="login-form" style="height:408px; width:280px;
 			align: left;background: url({%static 'img/app_background_ver4.png' %});">
 		{% csrf_token %}
-		<div style="width: 80%; margin: 0 auto; padding: 150px 0px 20px 0px">
+		<div style="width: 80%; margin: 0 auto; padding: 50px 0px 20px 0px">
 		{% if form.errors %}
 		<p align="center" style="color:red;">Your username and password didn't match. Please try again.</p>
 		{% else %}
@@ -26,6 +26,7 @@
 						<div>
 								<input type="submit" value="login" class="btn btn-primary btn-lg btn-block">
 								<input type="hidden" name="next" value="{{ next }}" />
+								<a href="{% url 'register' %}" style="color:#000;">Register</a>
 						</div>
 						</div>
 		</div>

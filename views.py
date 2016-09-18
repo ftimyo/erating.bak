@@ -1,15 +1,21 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Bank
 import requests as prequests
+from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 import json as pjson
 
 
 # Create your views here.
 apiKey = '87b023161ebf538b86a016bc0ac005fc'
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('login'))
 
 @login_required(login_url="login/")
 def home(request):

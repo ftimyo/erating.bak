@@ -15,9 +15,45 @@
 			background: url("{%static 'img/Beautiful_Green_Forest_Background.jpg' %}");
 			background-repeat: repeat;
 		}
+		ul {
+				list-style-type: none;
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+				background-color: #336600;
+			}
+
+			li {
+				float: right;
+			}
+			
+			
+			.customer_id {
+				float: left;
+				color: white;
+				text-align: center;
+				padding: 14px 16px;
+				text-decoration: none;
+			}
+			
+			
+			li a {
+				display: block;
+				color: white;
+				text-align: center;
+				padding: 14px 16px;
+				text-decoration: none;
+			}
+
+			li a:hover {
+				background-color: #111;
+			}
 	</style>
 </head>
 <body>
+		<ul>
+			<li><a id="logout" href="{% url 'logout' %}" style="visibility:hidden;">Log Out</a></li>
+		</ul>
     {% block content %}
     {% endblock %}
     {% block javascript %}

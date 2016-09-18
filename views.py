@@ -8,7 +8,8 @@ import requests as prequests
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 import json as pjson
-from .models import GreenMerchants
+from .models import GreenMerchants, GreenMerchantCat
+import datetime
 
 
 # Create your views here.
@@ -34,16 +35,28 @@ def home(request):
     bankurl ='http://api.reimaginebanking.com/accounts/{}/purchases?key={}'.format(aid,apiKey)
     response = prequests.get(bankurl).json()
     total = float(0)
+    pie = dict()
+    line = []
+    ct = datetime.date.today() - datetime.timedelta(365)
     for purchase in response:
-        m = GreenMerchants.objects.filter(mid = purchase.get('merchant_id',''))
+        mid = purchase.get('merchant_id','')
+        datestr = purchase.get('purchase_date','')
+        ptime = datetime.datetime.strptime(datestr,'%Y-%m-%d').date()
+        if ptime < ct:
+            continue
+        m = GreenMerchants.objects.filter(mid = mid)
         if len(m) > 0:
             m = m[0]
             price = float(purchase.get('amount',''))
             scale = float(m.mreward)
-            total += price * scale
+            y = price * scale
+            line += [(datestr,y)]
+            x = pie.setdefault(m.mcat.catn,0)
+            total += y
+            pie[m.mcat.catn] += y
     if total > 0:
         total = "%.2f"%total
-        context.update({'reward':total})
+        context.update({'reward':total,'pie':pie,'line':line})
     return render(request,"home.html",context)
 
 def signup(request):

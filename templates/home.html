@@ -3,9 +3,6 @@
 {% block content %}
 <div class="container">
 <div class="row">
-<script>
-document.getElementById("logout").style.visibility = "visible";
-</script>
 <div class="jumbotron">
 	<h1>Customer ID: {{cid}}</h1>
 	{% if aid %}
@@ -16,6 +13,56 @@ document.getElementById("logout").style.visibility = "visible";
 	{% endif %}
   <p>You are on your Dashboard</p>
 </div>
+<div id="piechart" style="height: 400px; width: 60%; margin: 0px 0px 0px 5%">
+</div>
+</br> </br> </br>
+<div id="linechart" style="height: 400px; width: 60%; margin: 0px 0px 0px 5%">
 </div>
 </div>
+</div>
+
+
+<script>
+document.getElementById("logout").style.visibility = "visible";
+var piedata = [];
+var linedata = [];
+{% for k,v in pie.items %}
+var x = {y:parseFloat({{v}}),indexLabel:"{{k}}"};
+piedata.push(x);
+{% endfor %}
+{% for k,v in line %}
+var z = {x:new Date('{{k}}'),y:parseFloat({{v}})};
+linedata.push(z);
+{% endfor %}
+console.log(piedata);
+console.log(linedata);
+var piechart = new CanvasJS.Chart("piechart",
+		{
+			theme:"theme2",
+			title:{
+				text: "Your Rewards Current Statement"
+			},
+			data:[
+				{
+					type:"pie",
+					showInLegend: true,
+					toolTipContent: "{y} - #percent %",
+					yValueFormatString: "#0.#",
+					legendText: "{indexLabel}",
+					dataPoints: piedata
+				}
+			]
+		});
+piechart.render();
+var linechart = new CanvasJS.Chart("linechart",{
+	title:{
+		text: "Your Rewards Last 12 Months"
+	},
+	data:[{
+		type:"line",
+		dataPoints:linedata
+	}]
+});
+linechart.render();
+</script>
 {% endblock %}

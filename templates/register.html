@@ -7,7 +7,7 @@
                 <div id="div-forms">
                     
 									<form id="register-form" method="post" action="{% url 'register' %}"
-													style="background:url({% static 'img/app_background_ver4.png' %}); height:408px; width:280px">
+													style="background:url({% static 'img/app_background_ver6.png' %}); height:750px; width:280px">
 		{% csrf_token %}
             		    <div style="width: 80%; margin: 0 auto; padding: 65px 0px 30px 0px">
 						<div class="modal-body">
@@ -15,6 +15,11 @@
                             <input name="fname" class="form-control" type="text" placeholder="First Name" required>
                             <input name="lname" class="form-control" type="text" placeholder="Last Name" required>
                             <input name="remail" class="form-control" type="text" placeholder="E-Mail" required>
+                            <input name="stname" class="form-control" type="text" placeholder="Street Name" required>
+                            <input name="stnumber" class="form-control" type="text" placeholder="Street Number" required>
+                            <input name="rcity" class="form-control" type="text" placeholder="City" required>
+                            <input name="rstate" class="form-control" type="text" placeholder="State" required>
+                            <input name="rzip" class="form-control" type="text" placeholder="Zip" required>
                             <input name="rpasswd" class="form-control" type="password" placeholder="Password" required>
                             <input name="cpasswd" class="form-control"	type="password" placeholder="Confirm Password" required>
             			</div>

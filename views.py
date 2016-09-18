@@ -19,7 +19,11 @@ def logout_view(request):
 
 @login_required(login_url="login/")
 def home(request):
+    user = request.user
+    bank = Bank.objects.filter(uid=user)[0]
+    print(bank.cid)
     return render(request,"home.html")
+
 def signup(request):
     emsg = ""
     if request.method != "POST":
@@ -65,8 +69,13 @@ def signup(request):
     response = prequests.post(bankurl, data=pjson.dumps(payload),
             headers={'content-type':'application/json'},)
     if response.status_code == 201:
-        user.save()
-        login(request,user)
-        return render(request,"home.html")
+       result = response.json().get('objectCreated','')
+       print(result)
+       user.save()
+       bank = Bank.objects.create(uid=user,cid=str(result.get('_id','')))
+       print(bank.cid)
+       bank.save()
+       login(request,user)
+       return render(request,"home.html")
     emsg = "System busy, try again later!"
     return render(request,"register.html",{'emsg':emsg})

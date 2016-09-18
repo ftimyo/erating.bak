@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 import json as pjson
 from .models import GreenMerchants, GreenMerchantCat
 import datetime
-
+from operator import itemgetter
 
 # Create your views here.
 apiKey = '87b023161ebf538b86a016bc0ac005fc'
@@ -22,8 +22,9 @@ def logout_view(request):
 @login_required(login_url="login/")
 def home(request):
     user = request.user
+    uname = user.first_name + ', ' + user.last_name;
     bank = Bank.objects.filter(uid=user)[0]
-    context = {'cid':bank.cid}
+    context = {'cid':bank.cid,'uname':uname}
     bankurl = 'http://api.reimaginebanking.com/customers/{}/accounts?key={}'.format(bank.cid,apiKey)
     response = prequests.get(bankurl)
     response = response.json()
@@ -37,6 +38,7 @@ def home(request):
     total = float(0)
     pie = dict()
     line = []
+    detail = []
     ct = datetime.date.today() - datetime.timedelta(365)
     for purchase in response:
         mid = purchase.get('merchant_id','')
@@ -54,6 +56,7 @@ def home(request):
             x = pie.setdefault(m.mcat.catn,0)
             total += y
             pie[m.mcat.catn] += y
+    line.sort(key=itemgetter(0))
     if total > 0:
         total = "%.2f"%total
         context.update({'reward':total,'pie':pie,'line':line})
